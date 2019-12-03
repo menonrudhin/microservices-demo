@@ -1,8 +1,12 @@
 # Start with a base image containing Java runtime
 FROM openjdk:8-jdk-alpine
- 
+
+ARG CLIENT_PORT
+
 # VAR_B gets the (overridden) value of VAR_A
-ENV PORT $CLIENT_PORT
+EXPOSE $CLIENT_PORT
+
+ENV PORT=$CLIENT_PORT
 
 # The application's jar file
 ARG JAR_FILE=target/eureka-client-0.0.1-SNAPSHOT.jar
@@ -11,4 +15,4 @@ ARG JAR_FILE=target/eureka-client-0.0.1-SNAPSHOT.jar
 ADD ${JAR_FILE} eureka-client-0.0.1-SNAPSHOT.jar
 
 # Run the jar file 
-ENTRYPOINT ["java","-jar","-Dport=$CLIENT_PORT","eureka-client-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","eureka-client-0.0.1-SNAPSHOT.jar"]
