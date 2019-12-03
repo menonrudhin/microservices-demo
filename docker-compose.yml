@@ -1,0 +1,24 @@
+version: '3.4'
+services:
+ service-registry:
+  build:
+   context: ./service-registry
+   network: host
+  ports:
+   - "8761:8761"
+ eureka-client-1:
+  build: 
+   context: ./eureka-client
+   args:
+    CLIENT_PORT: 8125
+   network: host
+  ports: 
+   - "8125:8125"
+ eureka-client-2:
+  build:
+   context: ./eureka-client
+   args:
+    CLIENT_PORT: 8124
+   network: host
+  ports:
+   - "8126:8124"
