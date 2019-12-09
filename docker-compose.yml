@@ -1,7 +1,6 @@
 version: '3.4'
 services:
  service-registry:
-  hostname: service-registry
   build:
    context: ./service-registry
   ports:
@@ -14,13 +13,17 @@ services:
   ports: 
    - "8125:8125"
   environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://microservices-demo_service-registry_1:8761/eureka
  eureka-client-2:
   build:
    context: ./eureka-client
    args:
     CLIENT_PORT: 8124 
   environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://microservices-demo_service-registry_1:8761/eureka
   ports:
    - "8126:8124"
+networks:
+ default:
+  external:
+   name: test
