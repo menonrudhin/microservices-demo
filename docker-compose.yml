@@ -1,9 +1,9 @@
 version: '3.4'
 services:
  service-registry:
+  hostname: service-registry
   build:
    context: ./service-registry
-   network: host
   ports:
    - "8761:8761"
  eureka-client-1:
@@ -11,14 +11,16 @@ services:
    context: ./eureka-client
    args:
     CLIENT_PORT: 8125
-   network: host
   ports: 
    - "8125:8125"
+  environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka
  eureka-client-2:
   build:
    context: ./eureka-client
    args:
-    CLIENT_PORT: 8124
-   network: host
+    CLIENT_PORT: 8124 
+  environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka
   ports:
    - "8126:8124"
